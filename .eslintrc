@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "codex"
+  ],
+  "settings": {
+    "jsdoc": {
+      "mode": "jsdoc"
+    }
+  },
+  "globals": {
+    "Range" : true
+  }
+}
