@@ -17,7 +17,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('postcss-nested-ancestors'),
+                //require('postcss-nested-ancestors'),
                 require('postcss-nested')
               ]
             }
