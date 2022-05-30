@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.2",
-    "open-graph-scraper": "^4.11.0",
     "svg-url-loader": "^7.1.1"
   }
 }
