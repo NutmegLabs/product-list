@@ -77,6 +77,7 @@ export default class ProductList {
       endpoint: config.endpoint || '',
       headers: config.headers || {},
       acList: config.acList || {},
+      placeholder: config.placeHolder || {},
     };
 
     this.nodes = {
@@ -224,7 +225,7 @@ export default class ProductList {
 
     this.select = this.make('label', ['select', 'placeholder']);
     this.input = this.make('input', null, {
-      placeholder: 'クリックして商品を選択',
+      placeholder: this.config.placeholder,
       type: 'text',
       readOnly: true,
       value: '',
