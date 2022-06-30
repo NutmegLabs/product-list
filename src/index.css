@@ -80,36 +80,36 @@
 .newline {
   white-space: pre-line;
 }
-.c-itemCard {
+.c-itemCardProductList {
 }
-.c-itemCard__item {
+.c-itemCardProductList__item {
   width: 100%;
   border-radius: 4px;
   background: #f9f9f9;
   overflow: hidden;
 }
-.c-itemCard__item a {
+.c-itemCardProductList__item a {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   position: relative;
 text-decoration: none;color: inherit;}
-.c-itemCard__item__pic {
+.c-itemCardProductList__item__pic {
   width: 300px;
   height: 200px;
   flex-shrink: 0;
 }
-.c-itemCard__item__pic img {
+.c-itemCardProductList__item__pic img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.c-itemCard__item__body {
+.c-itemCardProductList__item__body {
   width: 95%;
   padding: 0 32px 0 16px;
 }
-.c-itemCard__item__body__ttl {
+.c-itemCardProductList__item__body__ttl {
   font-size: 16px;
   font-weight: 700;
   display: -webkit-box;
@@ -117,7 +117,7 @@ text-decoration: none;color: inherit;}
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
-.c-itemCard__item__body__desc {
+.c-itemCardProductList__item__body__desc {
   font-size: 14px;
   color: #888;
   display: -webkit-box;
@@ -126,22 +126,22 @@ text-decoration: none;color: inherit;}
   -webkit-line-clamp: 2;
   margin-top: 8px;
 }
-.c-itemCard__item__body__info {
+.c-itemCardProductList__item__body__info {
   width: 100%;
   margin-top: 16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.c-itemCard__item__body__info__week {
+.c-itemCardProductList__item__body__info__week {
   font-size: 14px;
 }
-.c-itemCard__item__body__info__price {
+.c-itemCardProductList__item__body__info__price {
   font-size: 20px;
   font-weight: 700;
   margin-left: auto;
 }
-.c-itemCard__item__arrow {
+.c-itemCardProductList__item__arrow {
   width: 12px;
   height: 12px;
   display: block;
@@ -284,6 +284,11 @@ text-decoration: none;color: inherit;}
   background: #ebf1f3;
 }
 @media screen and (max-width: 768px) {
+  .c-itemCardProductList__item a { display: block; }
+  .c-itemCardProductList__item__pic { width: 100%; height: 230px; }
+  .c-itemCardProductList__item__body__ttl { font-size: 16px; }
+  .c-itemCardProductList__item__body { padding: 16px; }
+  .c-itemCardProductList__item__arrow { display: none; }
   .c-form-multiple > .option,
   .c-form-single > .option {
     width: 100%;
