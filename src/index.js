@@ -78,6 +78,7 @@ export default class ProductList {
       headers: config.headers || {},
       acList: config.acList || {},
       placeholder: config.placeHolder || {},
+      language: config.language || '',
     };
 
     this.nodes = {
@@ -352,7 +353,15 @@ export default class ProductList {
 
       if (meta.lowest_price_gross) {
         this.nodes.infoPrice = this.make('p', this.CSS.infoPrice, { style: 'color:#0094CC' });
-        this.nodes.infoPrice.textContent = meta.lowest_price_gross;
+        const regex = new RegExp(/円/);
+        let price = meta.lowest_price_gross;
+
+        if (this.config.language !== 'ja-JP') {
+          if (regex.test(price)) {
+            price = 'JPY ' + price.replace('円', '');
+          }
+        }
+        this.nodes.infoPrice.textContent = price;
         this.nodes.bodyInfo.appendChild(this.nodes.infoPrice);
       }
 
