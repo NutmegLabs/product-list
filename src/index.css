@@ -87,6 +87,7 @@
   border-radius: 4px;
   background: #f9f9f9;
   overflow: hidden;
+  background: var(--theme-content-section-backgroundcolor);
 }
 .c-itemCardProductList__item a {
   width: 100%;
