@@ -87,7 +87,7 @@
   border-radius: 4px;
   background: #f9f9f9;
   overflow: hidden;
-  /* background: var(--theme-content-section-backgroundcolor); */
+  background: var(--theme-background-color);
 }
 .c-itemCardProductList__item a {
   width: 100%;
@@ -141,6 +141,8 @@ text-decoration: none;color: inherit;}
   font-size: 20px;
   font-weight: 700;
   margin-left: auto;
+  color: #0094CC;
+  color: var(--theme-primary-color);
 }
 .c-itemCardProductList__item__arrow {
   width: 12px;
@@ -154,6 +156,8 @@ text-decoration: none;color: inherit;}
   border-top-style: solid;
   border-right-style: solid;
   transform: rotate(45deg);
+  border-color: #0094CC;
+  border-color: var(--theme-primary-color);
 }
 .c-form-multiple,
 .c-form-single {

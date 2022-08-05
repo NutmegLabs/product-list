@@ -305,7 +305,8 @@ export default class ProductList {
     this.nodes.linkImage = this.make('div', this.CSS.linkImage);
     this.nodes.linkTitle = this.make('h3', this.CSS.linkTitle);
     this.nodes.linkDescription = this.make('p', this.CSS.linkDescription);
-    this.nodes.textArrow = this.make('i', this.CSS.textArrow, { style: 'border-color:#0094CC;' });
+    // this.nodes.textArrow = this.make('i', this.CSS.textArrow, { style: 'border-color:#0094CC;' });
+    this.nodes.textArrow = this.make('i', this.CSS.textArrow);
 
     return holder;
   }
@@ -352,7 +353,8 @@ export default class ProductList {
       }
 
       if (meta.lowest_price_gross) {
-        this.nodes.infoPrice = this.make('p', this.CSS.infoPrice, { style: 'color:#0094CC' });
+        // this.nodes.infoPrice = this.make('p', this.CSS.infoPrice, { style: 'color:#0094CC' });
+        this.nodes.infoPrice = this.make('p', this.CSS.infoPrice);
         const regex = new RegExp(/円/);
         let price = meta.lowest_price_gross;
 
