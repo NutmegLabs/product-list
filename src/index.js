@@ -227,14 +227,22 @@ export default class ProductList {
     this.select = this.make('label', ['select', 'placeholder']);
     this.input = this.make('input', null, {
       placeholder: this.config.placeholder,
-      type: 'text',
-      readOnly: true,
+      type: 'search',
+      id: 'productSelectFilter',
+      // readOnly: true,
       value: '',
     });
     this.formDeleteFunc = (event) => {
       if (event.target.closest('.c-form-single .select') === null) {
         this.select.classList.remove('is-active');
       }
+    };
+    this.filteringProducts = (event) => {
+      const inputValue = document.getElementById('productSelectFilter').value;
+      const ulList = document.getElementById('productsList');
+
+      ulList.innerHTML = '';
+      this.filterProductsList(inputValue);
     };
     this.input.addEventListener('click', (e) => {
       if (this.select.classList.contains('is-active')) {
@@ -244,10 +252,12 @@ export default class ProductList {
       this.select.classList.add('is-active');
       document.addEventListener('click', this.formDeleteFunc);
     });
+    this.input.addEventListener('keyup', this.filteringProducts);
     this.select.appendChild(this.input);
     single.appendChild(this.select);
 
-    const ul = this.make('ul', 'option');
+    const ul = this.make('ul', 'option', { id: 'productsList' });
+    // this.makeProductsList(this.config.acList);
 
     this.config.acList.map((list) => {
       const url = list.url;
@@ -269,6 +279,61 @@ export default class ProductList {
     this.select.appendChild(this.nodes.progress);
 
     return single;
+  }
+
+  /**
+   * replaceFullWidthCharactersWithHalfWidth
+   *
+   * @returns {string}
+   * @param {string} s - text
+   */
+  replaceFullWidthCharactersWithHalfWidth(s) {
+    return s.replace(/[\uff01-\uff5e]/g, function (ch) {
+      return String.fromCharCode(ch.charCodeAt(0) - 0xfee0);
+    });
+  }
+
+  /**
+   * Make Products List
+   *
+   * @param {Array} pList - prodcts list
+   */
+  makeProductsList(pList) {
+    const ulList = document.getElementById('productsList');
+
+    pList.map((list) => {
+      const url = list.url;
+      const title = list.title;
+      const link = this.make('li', null, { value: url });
+
+      link.textContent = title;
+      link.addEventListener('click', () => {
+        this.url = url;
+        this.input.value = title;
+        this.select.classList.remove('is-active');
+        this.startFetching();
+      });
+      ulList.appendChild(link);
+    });
+  }
+
+  /**
+   * filtering Products List
+   *
+   * @param {string} filterText - filter text
+   */
+  filterProductsList(filterText) {
+    const text = this.replaceFullWidthCharactersWithHalfWidth(filterText.toLowerCase());
+
+    if (text == '') {
+      this.makeProductsList(this.config.acList);
+    } else {
+      const productsList = this.config.acList.filter((product) => {
+        return this.replaceFullWidthCharactersWithHalfWidth(product.title.toLowerCase()).includes(text);
+      });
+
+      this.makeProductsList(productsList);
+    }
   }
 
   /**
