@@ -224,7 +224,7 @@ export default class ProductList {
   makeInputHolder() {
     const single = this.make('div', 'c-form-single');
 
-    this.select = this.make('label', ['select', 'placeholder']);
+    this.select = this.make('label', ['select', 'placeholder', 'is-active']);
     this.input = this.make('input', null, {
       placeholder: this.config.placeholder,
       type: 'search',
