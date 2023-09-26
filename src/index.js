@@ -393,14 +393,12 @@ export default class ProductList {
 
       if (this.config.optimizeImages) {
         const srcSet = [640, 750, 828, 1080].map((w) => {
-          const resizedUrl = getResizedUrl(meta.image, {
+          return `${getResizedUrl(meta.image, {
             resize: {
               width: w,
               fit: 'cover',
             },
-          });
-
-          return `${resizedUrl} ${w}w`;
+          })} ${w}w`;
         }).join(', ');
 
         attributes.srcset = srcSet;
