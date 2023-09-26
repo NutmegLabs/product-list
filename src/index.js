@@ -16,6 +16,7 @@
 // eslint-disable-next-line
 import css from './index.css';
 import ToolboxIcon from './svg/ic_products_black.svg';
+import { base64FromByteArray } from './base64';
 import ajax from '@codexteam/ajax';
 // eslint-disable-next-line
 import polyfill from 'url-polyfill';
@@ -79,6 +80,7 @@ export default class ProductList {
       acList: config.acList || {},
       placeholder: config.placeHolder || {},
       language: config.language || '',
+      optimizeImages: config.optimizeImages || false,
     };
 
     this.nodes = {
@@ -110,6 +112,8 @@ export default class ProductList {
     this.formDeleteFunc = null;
 
     this.data = data;
+
+    console.log('config', this.config);
   }
 
   /**
@@ -385,7 +389,25 @@ export default class ProductList {
     this.nodes.container.appendChild(this.nodes.linkContent);
 
     if (meta.image) {
-      const img = this.make('img', null, { src: meta.image });
+      const attributes = { src: meta.image };
+
+      if (this.config.optimizeImages) {
+        const srcSet = [640, 750, 828, 1080].map((width) => {
+          const resizedUrl = getResizedUrl(meta.image, {
+            resize: {
+              width,
+              fit: 'cover',
+            },
+          });
+
+          return `${resizedUrl} ${width}w`;
+        }).join(', ');
+
+        attributes.srcset = srcSet;
+        attributes.sizes = '100vw';
+      }
+
+      const img = this.make('img', null, attributes);
 
       this.nodes.linkImage.appendChild(img);
       // this.nodes.linkImage.style.backgroundImage = 'url(' + image.url + ')';
@@ -577,3 +599,45 @@ export default class ProductList {
     return el;
   }
 }
+
+const cloudfrontHostname = 'https://d2obrjcl8a4u8e.cloudfront.net';
+const s3Hostname = 'ntmg-media.s3.us-west-1.amazonaws.com';
+const s3BucketName = 'ntmg-media';
+
+// type ImageEditRequest = {
+//   resize: {
+//     height?: number;
+//     width?: number;
+//     fit: 'cover' | 'contain' | 'fill' | 'inside' | 'outside';
+//   };
+// };
+
+const getResizedUrl = (originalImageUrl, imageEditRequest) => {
+  if (!originalImageUrl) {
+    return '';
+  }
+
+  if (!originalImageUrl.includes(s3Hostname)) {
+    return originalImageUrl;
+  }
+
+  const parts = originalImageUrl.split(s3Hostname + '/');
+
+  if (parts.length !== 2) {
+    return originalImageUrl;
+  }
+
+  const key = parts[1]
+    .split('/')
+    .map((pathPart) => decodeURIComponent(pathPart))
+    .join('/');
+  const imageRequest = {
+    bucket: s3BucketName,
+    key,
+    edits: imageEditRequest,
+  };
+
+  return `${cloudfrontHostname}/${base64FromByteArray(
+    Uint8Array.from(new TextEncoder().encode(JSON.stringify(imageRequest)))
+  )}`;
+};
