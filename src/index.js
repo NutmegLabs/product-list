@@ -392,15 +392,15 @@ export default class ProductList {
       const attributes = { src: meta.image };
 
       if (this.config.optimizeImages) {
-        const srcSet = [640, 750, 828, 1080].map((width) => {
+        const srcSet = [640, 750, 828, 1080].map((w) => {
           const resizedUrl = getResizedUrl(meta.image, {
             resize: {
-              width,
+              width: w,
               fit: 'cover',
             },
           });
 
-          return `${resizedUrl} ${width}w`;
+          return `${resizedUrl} ${w}w`;
         }).join(', ');
 
         attributes.srcset = srcSet;
@@ -626,6 +626,8 @@ const getResizedUrl = (originalImageUrl, imageEditRequest) => {
   if (parts.length !== 2) {
     return originalImageUrl;
   }
+
+  console.log('imageEditRequest', imageEditRequest);
 
   const key = parts[1]
     .split('/')
