@@ -112,8 +112,6 @@ export default class ProductList {
     this.formDeleteFunc = null;
 
     this.data = data;
-
-    console.log('config', this.config);
   }
 
   /**
@@ -400,8 +398,6 @@ export default class ProductList {
             },
           });
 
-          console.log('resizedUrl', resizedUrl);
-
           return `${resizedUrl} ${w}w`;
         }).join(', ');
 
@@ -628,8 +624,6 @@ const getResizedUrl = (originalImageUrl, imageEditRequest) => {
   if (parts.length !== 2) {
     return originalImageUrl;
   }
-
-  console.log('imageEditRequest', imageEditRequest);
 
   const key = parts[1]
     .split('/')
